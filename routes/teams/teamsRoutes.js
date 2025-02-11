@@ -6,6 +6,8 @@ const {
     createTeam,
     updateTeam,
     deleteTeam,
+    joinTeam,
+    leaveTeam,
 } = require('./teamsController');
 
 // Csapatok listázása
@@ -22,5 +24,11 @@ router.put('/:id', updateTeam);
 
 // Csapat törlése
 router.delete('/:id', deleteTeam);
+
+// Csapathoz csatlakozás
+router.post('/join', joinTeam);
+
+// Csapatból kilépés
+router.post('/leave', leaveTeam);
 
 module.exports = router;
