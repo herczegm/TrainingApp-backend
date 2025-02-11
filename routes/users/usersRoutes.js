@@ -6,6 +6,8 @@ const {
     getUserById,
     updateUser,
     deleteUser,
+    getUserProfile,
+    updateUserProfile,
 } = require('./usersController');
 
 // Felhasználók listázása
@@ -22,5 +24,11 @@ router.put('/:id', updateUser);
 
 //Felhasználó törlése
 router.delete('/:id', deleteUser);
+
+// Felhasználói profil lekérdezése
+router.get('/profile/:userId', getUserProfile);
+
+// Felhasználói profil módosítása
+router.put('/profile/:userId', updateUserProfile);
 
 module.exports = router;

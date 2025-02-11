@@ -80,10 +80,52 @@ const deleteUser = async (req, res) => {
     }
 };
 
+const getUserProfile = async (req, res) => {
+    const { userId } = req.params;
+
+    try {
+        const { data, error } = await supabase
+            .from('users')
+            .select('id, name, email, team_id, roles')
+            .eq('id', userId)
+            .single();
+
+        if (error) throw error;
+
+        res.status(200).json(data);
+    } catch (err) {
+        console.error('Error fetching user profile:', err);
+        res.status(500).json({ error: err.message });
+    }
+};
+
+const updateUserProfile = async (req, res) => {
+    const { userId } = req.params;
+    const { name, email } = req.body;
+
+    try {
+        const { data, error } = await supabase
+            .from('users')
+            .update({ name, email })
+            .eq('id', userId)
+            .select()
+            .single();
+
+        if (error) throw error;
+
+        res.status(200).json({ message: 'Profile updated successfully', data });
+    } catch (err) {
+        console.error('Error updating user profile:', err);
+        res.status(500).json({ error: err.message });
+    }
+}
+
 module.exports = {
     listUsers,
     getUserById,
     createUser,
     updateUser,
     deleteUser,
+    getUserProfile,
+    updateUserProfile,
 };
